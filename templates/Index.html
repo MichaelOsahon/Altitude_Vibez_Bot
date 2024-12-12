@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ALTITUDE VIBEZ BOT</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+
+<body style="background-color: powderblue;">
+    <h1>Welcome!</h1>
+
+    <!-- Flight Count Section -->
+    <h2>Would you like to know the number of planes currently flying over any country?</h2>
+    <label for="country">Enter Country Name:</label>
+    <input type="text" id="country" name="country">
+    <button onclick="getFlightCount()">Get Flight Count</button>
+
+    <p id="response"></p>
+
+    <script>
+        async function getFlightCount() {
+            const country_name = document.getElementById("country").value;
+
+            try {
+                const response = await fetch('/get_flight_count', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ country_name })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    document.getElementById("response").innerText = result.message;
+                } else {
+                    document.getElementById("response").innerText = result.error || result.message;
+                }
+            } catch (error) {
+                console.error('Request failed:', error);
+                document.getElementById("response").innerText = "Error: Unable to fetch flight data.";
+            }
+        }
+    </script>
+
+    <!-- Image Generation Section -->
+    <form action="/index_post1" method="POST">
+        <label>Curious to see what the skyline looks like? Have fun generating an image!:</label>
+        <input name="req_keyword" type="text" value="{{ keyword }}">
+        <input type="submit" value="Generate Image">
+    </form>
+
+    {% if image_url %}
+        <div class="photo-container">
+            <img src="{{ image_url }}" alt="Generated Image">
+        </div>
+    {% endif %}
+
+    <!-- Playlist Generation Section -->
+    <form action="/index_post" method="POST">
+        <label>Now enter any city there and enjoy a playlist based on the weather:</label>
+        <input name="req_city" type="text" value="{{ city }}">
+        <input type="submit" value="Generate Playlist">
+    </form>
+
+    {% if playlist %}
+        <h3>Generated Playlist for {{ city }}:</h3>
+        <iframe style="border-radius:12px" src="{{ playlist }}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    {% endif %}
+</body>
+</html>

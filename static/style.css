@@ -1,0 +1,141 @@
+/* Global settings */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #00c6ff, #0072ff); /* Gradient background */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin-top: 50px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    font-size: 2rem;
+    margin: 20px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+form {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2); /* Slight transparent background */
+    backdrop-filter: blur(10px); /* Makes the background blur */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+}
+
+/* Consistent styling for input fields */
+input[type="text"], input[type="submit"] {
+    padding: 12px;
+    width: 40%;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: 2px solid #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-top: 10px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #0072ff;
+    background-color: rgba(255, 255, 255, 0.4);
+    outline: none;
+}
+
+input[type="submit"] {
+    font-size: 1.2rem;
+    background-color: #0072ff;
+    border: none;
+    color: #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+#response {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    font-weight: 600;
+    color: #ffcc00;
+}
+
+/* For embedding Spotify playlist with matching size */
+iframe {
+    width: 60%; /* Ensure it takes up full width like text boxes */
+    height: 300px; /* Set the height to match text box height */
+    border-radius: 8px;
+    border: 2px solid #fff; /* Match the border style of input fields */
+    background-color: rgba(255, 255, 255, 0.2); /* Optional: for consistent background */
+    margin-top: 20px; /* Space above the iframe */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    form {
+        width: 80%;
+    }
+
+    input[type="text"], input[type="submit"], iframe {
+        width: 100%;
+    }
+
+    iframe {
+        height: 200px; /* Adjust height on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    input[type="text"], input[type="submit"], iframe {
+        width: 90%;
+    }
+
+    iframe {
+        height: 180px; /* Adjust height further for very small screens */
+    }
+}
