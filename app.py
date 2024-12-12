@@ -87,7 +87,7 @@ def get_flight_count():
 def index_post1():
     user_keyword = request.form['req_keyword']
     image_url = generate_image(user_keyword)  
-    return render_template('index.html', image_url=image_url)
+    return render_template('index.html', image_url=image_url, keyword=user_keyword)
 
 # Route to handle playlist generation based on city weather
 @app.route('/index_post', methods=['POST'])

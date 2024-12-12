@@ -4,7 +4,6 @@ from spotipy.oauth2 import SpotifyOAuth
 import os
 import requests
 import json
-import spotipy.util as util
 from datetime import datetime
 
 # Azure OpenAI client initialization
@@ -18,18 +17,30 @@ client = AzureOpenAI(
 scope = "playlist-modify-public playlist-modify-private"
 credentials = "spotify_keys.json"
 
+# Load Spotify credentials from the credentials file
 with open(credentials, "r") as keys:
     api_tokens = json.load(keys)
 
 client_id = api_tokens["client_id"]
 client_secret = api_tokens["client_secret"]
 redirectURI = api_tokens["redirect_uri"]
-weather_api_key = api_tokens["weather_api_key"]
 username = api_tokens["username"]
+weather_api_key = api_tokens["weather_api_key"]
 
-token = util.prompt_for_user_token(username, scope, client_id=client_id,
-                                   client_secret=client_secret,
-                                   redirect_uri=redirectURI)
+# Define the scope of the access needed
+scope = "playlist-modify-public playlist-modify-private"
+
+# SpotifyOAuth initialization
+sp_oauth = SpotifyOAuth(client_id=client_id,
+                         client_secret=client_secret,
+                         redirect_uri=redirectURI,
+                         scope=scope)
+
+# Get the token (this will handle authorization via the web browser)
+token_info = sp_oauth.get_access_token()
+
+# Now you have the token and can authenticate with the Spotify client
+token = token_info['access_token']
 sp = spotipy.Spotify(auth=token)
 
 # Function to generate image using DALL-E
@@ -43,7 +54,7 @@ def generate_image(prompt):
     image_url = json_response["data"][0]['url']
     return image_url
 
-# Function to get the weather-based playlist
+# Weather-based playlist mapping
 weather_music = {
     'thunderstorm': ['rock', 'metal'],
     'rain': ['jazz', 'lofi'],
